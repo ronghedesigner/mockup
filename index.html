@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript">
+        var isMobile = /iPad|iPod|iPhone|Android/.test(navigator.userAgent);
+        if (isMobile) {
+            window.location.href = 'mobile/index.html';
+        }
+    </script>
+    <style>
+        html,
+        body,
+        div,
+        dl,
+        dt,
+        dd,
+        ul,
+        ol,
+        li,
+        form,
+        fieldset,
+        legend,
+        input,
+        lable,
+        textarea,
+        blockquote {
+            padding: 0;
+            margin: 0;
+        }
+
+        .clearfix:after {
+            content: ".";
+            display: block;
+            height: 0;
+            visibility: hidden;
+            clear: both;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: "PingFang SC", "Microsoft Yahei", simsun, Arial, sans-serif;
+        }
+
+        .top {
+            width: 100%;
+            height: 100vh;
+            background-image: url(images/top.jpg);
+            background-size: cover;
+            position: relative;
+
+        }
+
+        .mask {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .topTitle {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -100px 0 0 -300px;
+
+        }
+
+        @keyframes updown {
+            0% {
+                transform: translateY(0px);
+            }
+
+            100% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .updown {
+            animation: updown 1s infinite alternate;
+        }
+
+        .coverarrow {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            margin-left: -30px;
+        }
+
+        @keyframes zoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .topTitle-ani {
+            animation: zoomIn 1s;
+        }
+
+        .chapterTopWrapper {
+            width: 100%;
+            position: relative;
+        }
+
+        .chaptertitle {
+            width: 700px;
+            position: absolute;
+            left: 50%;
+            top: 30%;
+            margin-left: -350px;
+            color: #FFF;
+        }
+
+        .chaptertitle .title {
+            text-align: center;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .chaptertitle .text {
+            padding: 5px 15px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            text-align: justify;
+        }
+
+        .chapterTop {
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            color: #FFF;
+            text-align: center;
+        }
+
+        .chapterTop1 {
+            background-image: url(images/01.jpg);
+        }
+
+        #container {
+            width: 700px;
+            position: relative;
+            margin: 0 auto;
+
+        }
+
+        #path {
+            position: absolute;
+            top: 0;
+            left: -300px;
+            width: 300px;
+        }
+
+        #mysvg ellipse {
+            stroke: #999;
+            fill: #999;
+        }
+
+        #content {
+            width: 700px;
+            text-align: justify;
+        }
+
+
+        .navWrapper {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #FFF;
+            z-index: 999;
+            box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: all 0.5s;
+        }
+
+        .nav {
+            width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .nav .logo {
+            display: block;
+            width: 100px;
+            line-height: 40px;
+            float: left;
+            color: #FFF;
+            background-color: #999;
+            text-align: center;
+        }
+
+        .nav ul {
+            float: left;
+            margin: 6px 0 0 50px;
+            list-style: none;
+        }
+
+        .nav li {
+            float: left;
+        }
+
+        .nav li a {
+            display: block;
+            padding: 2px 25px;
+            margin-right: 10px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .nav li a:hover {
+            color: #FFF;
+            background-color: #666;
+            border-radius: 20px;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+        }
+
+        #mySVG {
+            position: fixed;
+            top: 15%;
+            width: 200px;
+            height: 700px;
+
+        }
+
+        #footer {
+            color: #FFF;
+            background-color: #666;
+            padding: 30px;
+            text-align: center;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navWrapper" id="navWrapper">
+        <div class="nav clearfix">
+            <span class="logo">Logo</span>
+            <ul>
+                <li><a href="#chapterTop1" class="smooth">全景</a></li>
+                <li><a href="#chapterTop2" class="smooth">江海航道桥</a></li>
+                <li><a href="#chapterTop3" class="smooth">人工岛</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="top">
+        <div class="mask"></div>
+        <img src="images/title.png" alt="" class="topTitle topTitle-ani" id="topTitle">
+        <img src="images/arrow.png" alt="" class="coverarrow updown">
+    </div>
+
+    <div class="chapterTopWrapper">
+        <div class="chapterTop chapterTop1" id="chapterTop1">
+
+        </div>
+        <div class="chaptertitle">
+            <div class="title"><img src="images/chapter1-title.png" alt=""></div>
+            <div class="text">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In similique molestias facere quo voluptatum
+                    dolor quia quae, harum ad sunt fuga laboriosam assumenda modi atque! Dolores, rem? Voluptatem,
+                    obcaecati distinctio?</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In similique molestias facere quo voluptatum
+                    dolor quia quae, harum ad sunt fuga laboriosam assumenda modi atque! Dolores, rem? Voluptatem,
+                    obcaecati distinctio?</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="container">
+        <div id="path">
+            <svg width="400" height="600" xmlns="http://www.w3.org/2000/svg">
+
+
+                <path id="svg_1"
+                    d="m139.5,50.5l29,50l-29,42l29,30l-24,32l-5,20l10,26l13,16l-8,28l-15,13l-8,15l6,16l4,13"
+                    stroke-dasharray="5 2" stroke-width="3" stroke="#ccc" fill="none" />
+                <path d="m139.5,50.5l29,50l-29,42l29,30l-24,32l-5,20l10,26l13,16l-8,28l-15,13l-8,15l6,16l4,13"
+                    stroke-linecap="round" id="triangle" stroke-width="3" stroke="#FCEE21" fill="none" />
+                <ellipse stroke="#000" ry="3.5" rx="3.5" id="svg_3" cy="99.5" cx="169" fill-opacity="null"
+                    stroke-opacity="null" stroke-width="1.5" fill="#fff" />
+                <a href="#place01" class="path-anchor"><text xml:space="preserve" text-anchor="start"
+                        font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_4" y="104" x="178.5"
+                        fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000"
+                        fill="#000000">地点1</text></a>
+                <ellipse stroke="#000" ry="3.5" rx="3.5" id="svg_5" cy="140.5" cx="141" fill-opacity="null"
+                    stroke-opacity="null" stroke-width="1.5" fill="#fff" />
+                <a href="#place02" class="path-anchor"><text xml:space="preserve" text-anchor="start"
+                        font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_6" y="144" x="155.5"
+                        fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000"
+                        fill="#000000">地点2</text></a>
+                <ellipse stroke="#000" ry="3.5" rx="3.5" id="svg_7" cy="173.5" cx="170" fill-opacity="null"
+                    stroke-opacity="null" stroke-width="1.5" fill="#fff" />
+                <a href="#place03" class="path-anchor"><text xml:space="preserve" text-anchor="start"
+                        font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_8" y="177" x="178.5"
+                        fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000"
+                        fill="#000000">地点3</text></a>
+                <ellipse stroke="#000" ry="3.5" rx="3.5" id="svg_9" cy="225.5" cx="142" fill-opacity="null"
+                    stroke-opacity="null" stroke-width="1.5" fill="#fff" />
+                <a href="#place04" class="path-anchor"><text xml:space="preserve" text-anchor="start"
+                        font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_10" y="230" x="155.5"
+                        fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000"
+                        fill="#000000">地点4</text></a>
+                <ellipse stroke="#000" ry="3.5" rx="3.5" id="svg_11" cy="293.5" cx="156" fill-opacity="null"
+                    stroke-opacity="null" stroke-width="1.5" fill="#fff" />
+                <a href="#place05" class="path-anchor">
+                    <text style="cursor: move;" xml:space="preserve" text-anchor="start"
+                        font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_12" y="299" x="169.5"
+                        fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000"
+                        fill="#000000">地点5</text></a>
+
+            </svg>
+        </div>
+
+        <div class="chapter">
+            <h2 id="beginning">起点</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nisi quod quasi ab vel vitae minus.
+                Eum,
+                ducimus aliquid doloremque odio natus corrupti, suscipit reprehenderit id labore minus doloribus
+                totam, nemo
+                dignissimos repellat? Reiciendis porro, eum nisi fugiat pariatur dignissimos officiis ut vel eius
+                omnis,
+                voluptatum dicta soluta ipsa maxime.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nisi quod quasi ab vel vitae minus.
+                Eum,
+                ducimus aliquid doloremque odio natus corrupti, suscipit reprehenderit id labore minus doloribus
+                totam, nemo
+                dignissimos repellat? Reiciendis porro, eum nisi fugiat pariatur dignissimos officiis ut vel eius
+                omnis,
+                voluptatum dicta soluta ipsa maxime.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nisi quod quasi ab vel vitae minus.
+                Eum,
+                ducimus aliquid doloremque odio natus corrupti, suscipit reprehenderit id labore minus doloribus
+                totam, nemo
+                dignissimos repellat? Reiciendis porro, eum nisi fugiat pariatur dignissimos officiis ut vel eius
+                omnis,
+                voluptatum dicta soluta ipsa maxime.</p>
+            <p>Culpa facilis officia illum eaque nemo incidunt, debitis iure expedita error quaerat, cupiditate
+                mollitia
+                sint, iusto rem eius? Placeat modi velit perspiciatis consequuntur, eaque dolor? Atque assumenda
+                quisquam
+                quibusdam, temporibus consequuntur aut porro iure, fugit, incidunt inventore nihil optio. Officia
+                deleniti
+                animi eius maiores deserunt dicta, autem cupiditate natus sapiente.</p>
+            <p>Culpa facilis officia illum eaque nemo incidunt, debitis iure expedita error quaerat, cupiditate
+                mollitia
+                sint, iusto rem eius? Placeat modi velit perspiciatis consequuntur, eaque dolor? Atque assumenda
+                quisquam
+                quibusdam, temporibus consequuntur aut porro iure, fugit, incidunt inventore nihil optio. Officia
+                deleniti
+                animi eius maiores deserunt dicta, autem cupiditate natus sapiente.</p>
+            <h2 id="place01">地点1</h2>
+            <p>Tempora tenetur repudiandae laboriosam similique aperiam molestias doloremque accusamus aliquid
+                alias! Sint
+                porro, architecto illum nemo voluptate beatae eos maiores nam molestiae fuga laudantium autem aut
+                eius
+                cumque magnam distinctio accusamus suscipit ex minus voluptas quibusdam expedita. Delectus laborum
+                ullam
+                quam impedit, accusamus reiciendis voluptatibus laudantium architecto ab tempora necessitatibus.</p>
+            <video src="video/video1.mp4" class="video1" id="video1" controls poster="images/video1poster.jpg">
+
+            </video>
+            <p>Dignissimos error optio fugit odio fuga atque ut earum expedita soluta, quod vitae corrupti iste
+                quis, sunt
+                tenetur tempora. Nemo quo minus esse cumque. Perferendis quia ipsum provident laborum libero in
+                adipisci
+                possimus. Aperiam soluta consequatur, odio, rerum quaerat qui distinctio hic voluptate at et
+                consectetur
+                eveniet laboriosam dolore facere?</p>
+            <p>Provident non voluptatum, quos minus sed saepe consequatur officia, dignissimos atque, fugit enim
+                modi
+                accusantium iusto illo. Laborum neque nulla voluptatum suscipit odit laboriosam numquam consequatur
+                molestiae culpa ut rerum eaque illum mollitia accusamus, aut in aliquam ea iusto maiores iure
+                officia.
+                Labore officia delectus fugit molestias. Dolorum, rerum totam!</p>
+            <h2 id="place02">地点2</h2>
+            <p>Tempora tenetur repudiandae laboriosam similique aperiam molestias doloremque accusamus aliquid
+                alias! Sint
+                porro, architecto illum nemo voluptate beatae eos maiores nam molestiae fuga laudantium autem aut
+                eius
+                cumque magnam distinctio accusamus suscipit ex minus voluptas quibusdam expedita. Delectus laborum
+                ullam
+                quam impedit, accusamus reiciendis voluptatibus laudantium architecto ab tempora necessitatibus.</p>
+            <p>Sint pariatur nam quo neque modi dolore iure quasi laboriosam velit, explicabo suscipit corrupti
+                repudiandae,
+                aspernatur blanditiis eos illo, fugiat corporis aut! Non quos fugiat ducimus ex recusandae eum minus
+                neque.
+                Provident eos quas maiores quia ducimus, voluptate, voluptatem accusamus odit consequatur fugiat ut,
+                nostrum
+                praesentium maxime temporibus reprehenderit voluptates.</p>
+            <p>In recusandae asperiores labore non itaque velit dolore veritatis eligendi esse, corrupti sint. Vitae
+                modi
+                numquam esse impedit aut delectus doloremque illum iure, perferendis at ipsa eum quod nesciunt sed,
+                maxime
+                aspernatur cumque libero adipisci. Est esse expedita, a sequi at repellendus minus nostrum ipsum,
+                aperiam
+                quisquam dignissimos atque et.</p>
+            <p>Fugit vero, maiores debitis mollitia consequuntur explicabo odit deleniti obcaecati, minus quis quo
+                iusto
+                fugiat soluta aspernatur! Quas molestias possimus fugit, numquam quis inventore autem explicabo
+                dolores
+                distinctio aliquam. Ratione quibusdam necessitatibus eius quisquam quo? Deserunt accusantium id
+                recusandae
+                quibusdam quis! Exercitationem veniam autem nemo! Ipsam eligendi unde beatae quibusdam!</p>
+            <p>Eaque tempore cumque ipsam molestiae fugit, excepturi voluptatem commodi recusandae labore dolorum
+                aperiam
+                veniam, error assumenda laborum numquam neque perferendis soluta sunt vitae eius corrupti optio
+                mollitia
+                rem. Mollitia doloremque voluptate illum autem sint est vel, debitis quibusdam repellendus! Minus
+                cupiditate
+                doloribus in debitis cum nostrum obcaecati animi voluptate quos!</p>
+            <h2 id="place03">地点3</h2>
+            <p>Eligendi magni nulla culpa accusamus pariatur eveniet, minus aut qui quasi, illum dolorem aliquid
+                fugit
+                exercitationem perferendis voluptatem at. Voluptate praesentium earum nesciunt explicabo et
+                pariatur,
+                doloribus, dignissimos natus molestias animi exercitationem vel ipsum incidunt eaque! Porro iste
+                odit a
+                voluptatum, omnis quaerat nobis, deleniti amet dignissimos beatae expedita pariatur.</p>
+        </div>
+
+
+
+        <div class="chapter">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nisi quod quasi ab vel vitae minus.
+                Eum,
+                ducimus aliquid doloremque odio natus corrupti, suscipit reprehenderit id labore minus doloribus
+                totam, nemo
+                dignissimos repellat? Reiciendis porro, eum nisi fugiat pariatur dignissimos officiis ut vel eius
+                omnis,
+                voluptatum dicta soluta ipsa maxime.</p>
+            <p>Culpa facilis officia illum eaque nemo incidunt, debitis iure expedita error quaerat, cupiditate
+                mollitia
+                sint, iusto rem eius? Placeat modi velit perspiciatis consequuntur, eaque dolor? Atque assumenda
+                quisquam
+                quibusdam, temporibus consequuntur aut porro iure, fugit, incidunt inventore nihil optio. Officia
+                deleniti
+                animi eius maiores deserunt dicta, autem cupiditate natus sapiente.</p>
+            <p>Culpa facilis officia illum eaque nemo incidunt, debitis iure expedita error quaerat, cupiditate
+                mollitia
+                sint, iusto rem eius? Placeat modi velit perspiciatis consequuntur, eaque dolor? Atque assumenda
+                quisquam
+                quibusdam, temporibus consequuntur aut porro iure, fugit, incidunt inventore nihil optio. Officia
+                deleniti
+                animi eius maiores deserunt dicta, autem cupiditate natus sapiente.</p>
+            <p>Culpa facilis officia illum eaque nemo incidunt, debitis iure expedita error quaerat, cupiditate
+                mollitia
+                sint, iusto rem eius? Placeat modi velit perspiciatis consequuntur, eaque dolor? Atque assumenda
+                quisquam
+                quibusdam, temporibus consequuntur aut porro iure, fugit, incidunt inventore nihil optio. Officia
+                deleniti
+                animi eius maiores deserunt dicta, autem cupiditate natus sapiente.</p>
+            <h2 id="place04">地点4</h2>
+            <p>Tempora tenetur repudiandae laboriosam similique aperiam molestias doloremque accusamus aliquid
+                alias! Sint
+                porro, architecto illum nemo voluptate beatae eos maiores nam molestiae fuga laudantium autem aut
+                eius
+                cumque magnam distinctio accusamus suscipit ex minus voluptas quibusdam expedita. Delectus laborum
+                ullam
+                quam impedit, accusamus reiciendis voluptatibus laudantium architecto ab tempora necessitatibus.</p>
+            <video class="video2" id="video2" controls poster="images/video2poster.jpg">
+                <source src="video/video2.mp4" type="video/mp4">
+            </video>
+            <p>Dignissimos error optio fugit odio fuga atque ut earum expedita soluta, quod vitae corrupti iste
+                quis, sunt
+                tenetur tempora. Nemo quo minus esse cumque. Perferendis quia ipsum provident laborum libero in
+                adipisci
+                possimus. Aperiam soluta consequatur, odio, rerum quaerat qui distinctio hic voluptate at et
+                consectetur
+                eveniet laboriosam dolore facere?</p>
+            <p>Provident non voluptatum, quos minus sed saepe consequatur officia, dignissimos atque, fugit enim
+                modi
+                accusantium iusto illo. Laborum neque nulla voluptatum suscipit odit laboriosam numquam consequatur
+                molestiae culpa ut rerum eaque illum mollitia accusamus, aut in aliquam ea iusto maiores iure
+                officia.
+                Labore officia delectus fugit molestias. Dolorum, rerum totam!</p>
+            <p>Sint pariatur nam quo neque modi dolore iure quasi laboriosam velit, explicabo suscipit corrupti
+                repudiandae,
+                aspernatur blanditiis eos illo, fugiat corporis aut! Non quos fugiat ducimus ex recusandae eum minus
+                neque.
+                Provident eos quas maiores quia ducimus, voluptate, voluptatem accusamus odit consequatur fugiat ut,
+                nostrum
+                praesentium maxime temporibus reprehenderit voluptates.</p>
+            <p>In recusandae asperiores labore non itaque velit dolore veritatis eligendi esse, corrupti sint. Vitae
+                modi
+                numquam esse impedit aut delectus doloremque illum iure, perferendis at ipsa eum quod nesciunt sed,
+                maxime
+                aspernatur cumque libero adipisci. Est esse expedita, a sequi at repellendus minus nostrum ipsum,
+                aperiam
+                quisquam dignissimos atque et.</p>
+            <p>Fugit vero, maiores debitis mollitia consequuntur explicabo odit deleniti obcaecati, minus quis quo
+                iusto
+                fugiat soluta aspernatur! Quas molestias possimus fugit, numquam quis inventore autem explicabo
+                dolores
+                distinctio aliquam. Ratione quibusdam necessitatibus eius quisquam quo? Deserunt accusantium id
+                recusandae
+                quibusdam quis! Exercitationem veniam autem nemo! Ipsam eligendi unde beatae quibusdam!</p>
+            <h2 id="place05">地点5</h2>
+            <p>Eaque tempore cumque ipsam molestiae fugit, excepturi voluptatem commodi recusandae labore dolorum
+                aperiam
+                veniam, error assumenda laborum numquam neque perferendis soluta sunt vitae eius corrupti optio
+                mollitia
+                rem. Mollitia doloremque voluptate illum autem sint est vel, debitis quibusdam repellendus! Minus
+                cupiditate
+                doloribus in debitis cum nostrum obcaecati animi voluptate quos!</p>
+            <p>Eligendi magni nulla culpa accusamus pariatur eveniet, minus aut qui quasi, illum dolorem aliquid
+                fugit
+                exercitationem perferendis voluptatem at. Voluptate praesentium earum nesciunt explicabo et
+                pariatur,
+                doloribus, dignissimos natus molestias animi exercitationem vel ipsum incidunt eaque! Porro iste
+                odit a
+                voluptatum, omnis quaerat nobis, deleniti amet dignissimos beatae expedita pariatur.</p>
+        </div>
+
+
+
+        <div class="chapter">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta nisi quod quasi ab vel vitae minus.
+                Eum,
+                ducimus aliquid doloremque odio natus corrupti, suscipit reprehenderit id labore minus doloribus
+                totam, nemo
+                dignissimos repellat? Reiciendis porro, eum nisi fugiat pariatur dignissimos officiis ut vel eius
+                omnis,
+                voluptatum dicta soluta ipsa maxime.</p>
+            <p>Culpa facilis officia illum eaque nemo incidunt, debitis iure expedita error quaerat, cupiditate
+                mollitia
+                sint, iusto rem eius? Placeat modi velit perspiciatis consequuntur, eaque dolor? Atque assumenda
+                quisquam
+                quibusdam, temporibus consequuntur aut porro iure, fugit, incidunt inventore nihil optio. Officia
+                deleniti
+                animi eius maiores deserunt dicta, autem cupiditate natus sapiente.</p>
+            <p>Tempora tenetur repudiandae laboriosam similique aperiam molestias doloremque accusamus aliquid
+                alias! Sint
+                porro, architecto illum nemo voluptate beatae eos maiores nam molestiae fuga laudantium autem aut
+                eius
+                cumque magnam distinctio accusamus suscipit ex minus voluptas quibusdam expedita. Delectus laborum
+                ullam
+                quam impedit, accusamus reiciendis voluptatibus laudantium architecto ab tempora necessitatibus.</p>
+            <p>Dignissimos error optio fugit odio fuga atque ut earum expedita soluta, quod vitae corrupti iste
+                quis, sunt
+                tenetur tempora. Nemo quo minus esse cumque. Perferendis quia ipsum provident laborum libero in
+                adipisci
+                possimus. Aperiam soluta consequatur, odio, rerum quaerat qui distinctio hic voluptate at et
+                consectetur
+                eveniet laboriosam dolore facere?</p>
+            <p>Provident non voluptatum, quos minus sed saepe consequatur officia, dignissimos atque, fugit enim
+                modi
+                accusantium iusto illo. Laborum neque nulla voluptatum suscipit odit laboriosam numquam consequatur
+                molestiae culpa ut rerum eaque illum mollitia accusamus, aut in aliquam ea iusto maiores iure
+                officia.
+                Labore officia delectus fugit molestias. Dolorum, rerum totam!</p>
+            <p>Sint pariatur nam quo neque modi dolore iure quasi laboriosam velit, explicabo suscipit corrupti
+                repudiandae,
+                aspernatur blanditiis eos illo, fugiat corporis aut! Non quos fugiat ducimus ex recusandae eum minus
+                neque.
+                Provident eos quas maiores quia ducimus, voluptate, voluptatem accusamus odit consequatur fugiat ut,
+                nostrum
+                praesentium maxime temporibus reprehenderit voluptates.</p>
+            <p>In recusandae asperiores labore non itaque velit dolore veritatis eligendi esse, corrupti sint. Vitae
+                modi
+                numquam esse impedit aut delectus doloremque illum iure, perferendis at ipsa eum quod nesciunt sed,
+                maxime
+                aspernatur cumque libero adipisci. Est esse expedita, a sequi at repellendus minus nostrum ipsum,
+                aperiam
+                quisquam dignissimos atque et.</p>
+            <p>Fugit vero, maiores debitis mollitia consequuntur explicabo odit deleniti obcaecati, minus quis quo
+                iusto
+                fugiat soluta aspernatur! Quas molestias possimus fugit, numquam quis inventore autem explicabo
+                dolores
+                distinctio aliquam. Ratione quibusdam necessitatibus eius quisquam quo? Deserunt accusantium id
+                recusandae
+                quibusdam quis! Exercitationem veniam autem nemo! Ipsam eligendi unde beatae quibusdam!</p>
+            <p>Eaque tempore cumque ipsam molestiae fugit, excepturi voluptatem commodi recusandae labore dolorum
+                aperiam
+                veniam, error assumenda laborum numquam neque perferendis soluta sunt vitae eius corrupti optio
+                mollitia
+                rem. Mollitia doloremque voluptate illum autem sint est vel, debitis quibusdam repellendus! Minus
+                cupiditate
+                doloribus in debitis cum nostrum obcaecati animi voluptate quos!</p>
+            <p>Eligendi magni nulla culpa accusamus pariatur eveniet, minus aut qui quasi, illum dolorem aliquid
+                fugit
+                exercitationem perferendis voluptatem at. Voluptate praesentium earum nesciunt explicabo et
+                pariatur,
+                doloribus, dignissimos natus molestias animi exercitationem vel ipsum incidunt eaque! Porro iste
+                odit a
+                voluptatum, omnis quaerat nobis, deleniti amet dignissimos beatae expedita pariatur.</p>
+        </div>
+
+    </div>
+
+
+    <div id="footer">
+        Copyright &copy;xxxxxxxxxxxxxxxx
+    </div>
+
+
+
+
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/ScrollMagic.js"></script>
+    <script type="text/javascript">
+        var winHeight;
+        var winScrollDistance;
+        var beginning;
+        var contentScrollDistance;
+
+        $(document).ready(function () {
+            winHeight = $(window).height();
+            beginning = $("#beginning").offset().top;
+            var controller = new ScrollMagic.Controller();
+            var scene = new ScrollMagic.Scene({
+                    triggerElement: "#path",
+                    triggerHook: 0.2
+                })
+                .setPin("#path")
+                .addTo(controller);
+
+        })
+        $(".smooth").click(function () {
+            var href = $(this).attr("href");
+            var pos = $(href).offset().top;
+            $("html,body").animate({
+                scrollTop: pos
+            }, 1000);
+            return false;
+        })
+        $(".path-anchor").click(function () {
+            var href = $(this).attr("href");
+            var pos = $(href).offset().top - 100;
+            $("html,body").animate({
+                scrollTop: pos
+            }, 1000);
+            return false;
+        })
+
+        var triangle = document.getElementById("triangle");
+        var length = triangle.getTotalLength();
+
+        // The start position of the drawing
+        triangle.style.strokeDasharray = length;
+
+        // Hide the triangle by offsetting dash. Remove this line to show the triangle before scroll draw
+        triangle.style.strokeDashoffset = length;
+
+        // Find scroll percentage on scroll (using cross-browser properties), and offset dash same amount as percentage scrolled
+        window.addEventListener("scroll", function () {
+            winScrollDistance = $(window).scrollTop();
+            if (winScrollDistance >= winHeight) {
+                $("#navWrapper").css("opacity", 1);
+            } else {
+                $("#navWrapper").css("opacity", 0);
+            }
+
+            contentScrollDistance = winScrollDistance - beginning + winHeight * 0.2;
+            var contentHeight = document
+                .documentElement.scrollHeight - document.documentElement.clientHeight - beginning;
+
+            var scrollpercent = contentScrollDistance / contentHeight;
+
+            var draw = length * scrollpercent;
+
+
+            triangle.style.strokeDashoffset = length - draw;
+
+        });
+    </script>
+</body>
+
+</html>
